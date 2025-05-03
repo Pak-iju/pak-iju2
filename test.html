@@ -1,49 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Redirect Klik Bertahap</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    #click-layer {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      z-index: 9999;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        // Ganti URL di bawah dengan link tujuan kamu
+        location.replace('https://www.profitableratecpm.com/w76e82ja?key=e836a275498216ded0213c946eb12598');
+    </script>
 </head>
-<body>
-
-<div id="click-layer"></div>
-
-<script>
-  let clickCount = 0;
-  const layer = document.getElementById('click-layer');
-
-  layer.addEventListener('click', function () {
-    clickCount++;
-
-    if (clickCount === 1) {
-      // Klik pertama: arahkan ke iklan dengan delay
-      setTimeout(() => {
-        window.location.href = 'https://www.profitableratecpm.com/w76e82ja?key=e836a275498216ded0213c946eb12598';
-      }, 300);
-    } else if (clickCount === 2) {
-      // Klik kedua: arahkan ke Google dengan delay
-      setTimeout(() => {
-        window.location.href = 'https://www.google.com/';
-      }, 300);
-    }
-  });
-</script>
-
-</body>
 </html>
