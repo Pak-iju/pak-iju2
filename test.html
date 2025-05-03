@@ -16,6 +16,7 @@
       height: 100%;
       background: transparent;
       z-index: 9999;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -24,15 +25,22 @@
 <div id="click-layer"></div>
 
 <script>
-  let clicked = false;
+  let clickCount = 0;
   const layer = document.getElementById('click-layer');
 
   layer.addEventListener('click', function () {
-    if (!clicked) {
-      clicked = true;
-      window.location.href = 'https://www.profitableratecpm.com/w76e82ja?key=e836a275498216ded0213c946eb12598';
-    } else {
-      window.location.href = 'https://www.google.com/';
+    clickCount++;
+
+    if (clickCount === 1) {
+      // Klik pertama: arahkan ke iklan dengan delay
+      setTimeout(() => {
+        window.location.href = 'https://www.profitableratecpm.com/w76e82ja?key=e836a275498216ded0213c946eb12598';
+      }, 300);
+    } else if (clickCount === 2) {
+      // Klik kedua: arahkan ke Google dengan delay
+      setTimeout(() => {
+        window.location.href = 'https://www.google.com/';
+      }, 300);
     }
   });
 </script>
