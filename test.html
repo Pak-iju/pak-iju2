@@ -1,31 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Redirect Klik Bertahap</title>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background: #ffffff;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Redirect Klik Bertahap</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    #click-layer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 9999;
+    }
+  </style>
 </head>
 <body>
-    <script>
-        let clickCount = 0;
 
-        document.body.addEventListener('click', function () {
-            clickCount++;
+<div id="click-layer"></div>
 
-            if (clickCount === 1) {
-                window.location.href = 'https://www.profitableratecpm.com/w76e82ja?key=e836a275498216ded0213c946eb12598';
-            } else if (clickCount === 2) {
-                window.location.href = 'https://www.google.com/';
-            }
-        });
-    </script>
+<script>
+  let clicked = false;
+  const layer = document.getElementById('click-layer');
+
+  layer.addEventListener('click', function () {
+    if (!clicked) {
+      clicked = true;
+      window.location.href = 'https://www.profitableratecpm.com/w76e82ja?key=e836a275498216ded0213c946eb12598';
+    } else {
+      window.location.href = 'https://www.google.com/';
+    }
+  });
+</script>
+
 </body>
 </html>
