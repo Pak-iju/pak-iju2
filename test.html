@@ -2,10 +2,30 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Redirecting...</title>
-    <script type="text/javascript">
-        // Ganti URL di bawah dengan link tujuan kamu
-        location.replace('https://www.profitableratecpm.com/w76e82ja?key=e836a275498216ded0213c946eb12598');
-    </script>
+    <title>Redirect Klik Bertahap</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: #ffffff;
+            cursor: pointer;
+        }
+    </style>
 </head>
+<body>
+    <script>
+        let clickCount = 0;
+
+        document.body.addEventListener('click', function () {
+            clickCount++;
+
+            if (clickCount === 1) {
+                window.location.href = 'https://www.profitableratecpm.com/w76e82ja?key=e836a275498216ded0213c946eb12598';
+            } else if (clickCount === 2) {
+                window.location.href = 'https://www.google.com/';
+            }
+        });
+    </script>
+</body>
 </html>
