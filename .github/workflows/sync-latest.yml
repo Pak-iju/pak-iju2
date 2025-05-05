@@ -1,26 +1,28 @@
-name: Auto Sync Latest Files
+name: Auto Sync Latest File
 
 on:
   push:
     branches:
-      - main  # pastikan ini sesuai dengan branch yang kamu gunakan
+      - main  # pastikan sesuai dengan branch utama kamu
 
 jobs:
-  sync-files:
+  sync-latest-file:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the repository
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Get list of files in folder f/
-        id: getfiles
+      - name: Get Latest File in f/
+        id: getfile
         run: |
-          FILES=$(ls f/)
-          echo "files=$FILES" >> $GITHUB_ENV
+          FILE=$(ls -t f/ | head -n 1)
+          echo "latest_file=$FILE" >> $GITHUB_OUTPUT
 
-      - name: Clone target repos
+      - name: Clone and Copy to Repos
         run: |
+          FILE_NAME=${{ steps.getfile.outputs.latest_file }}
+
           REPO1=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/doodstr.git
           REPO2=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/poophd.git
           REPO3=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/do7go.git
@@ -29,37 +31,27 @@ jobs:
           git clone $REPO2 repo2
           git clone $REPO3 repo3
 
-      - name: Copy files to target repos
-        run: |
-          for FILE in ${{ env.files }}; do
-            cp f/$FILE repo1/
-            cp f/$FILE repo2/
-            cp f/$FILE repo3/
-          done
+          cp f/$FILE_NAME repo1/
+          cp f/$FILE_NAME repo2/
+          cp f/$FILE_NAME repo3/
 
-      - name: Commit and push changes to repo1
-        run: |
           cd repo1
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
           git add .
-          git commit -m "Auto sync files" || echo "No changes to commit"
+          git commit -m "Auto sync file: $FILE_NAME"
           git push
 
-      - name: Commit and push changes to repo2
-        run: |
           cd ../repo2
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
           git add .
-          git commit -m "Auto sync files" || echo "No changes to commit"
+          git commit -m "Auto sync file: $FILE_NAME"
           git push
 
-      - name: Commit and push changes to repo3
-        run: |
           cd ../repo3
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
           git add .
-          git commit -m "Auto sync files" || echo "No changes to commit"
+          git commit -m "Auto sync file: $FILE_NAME"
           git push
