@@ -12,46 +12,99 @@
             box-sizing: border-box;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             height: 100vh;
-            background: url('https://via.placeholder.com/1500') no-repeat center center fixed; 
-            background-size: cover;
+            background: linear-gradient(45deg, #ff5733, #900c3f);
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
             text-align: center;
+            animation: backgroundMove 10s ease-in-out infinite;
         }
+
+        @keyframes backgroundMove {
+            0% {
+                background: linear-gradient(45deg, #ff5733, #900c3f);
+            }
+            50% {
+                background: linear-gradient(45deg, #900c3f, #ff5733);
+            }
+            100% {
+                background: linear-gradient(45deg, #ff5733, #900c3f);
+            }
+        }
+
         .overlay {
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 30px;
-            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
+
         h1 {
             font-size: 3em;
             margin-bottom: 20px;
-            color: #ff5733;
+            animation: fadeIn 2s ease;
         }
+
         p {
-            font-size: 1.5em;
+            font-size: 1.4em;
             margin-bottom: 20px;
+            animation: fadeIn 3s ease;
         }
+
         .countdown {
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: bold;
-            margin-top: 20px;
             color: #00ff00;
+            margin-top: 30px;
+            animation: fadeIn 4s ease;
         }
-        .time-unit {
+
+        .countdown span {
+            display: inline-block;
             margin: 0 10px;
+            padding: 10px;
+            background-color: #ff5733;
+            border-radius: 5px;
         }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .button {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: #00ff00;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #007d00;
+        }
+
     </style>
 </head>
 <body>
     <div class="overlay">
         <h1>Website Sedang Dalam Pemeliharaan</h1>
-        <p>Mohon maaf, website kami sedang dalam proses pemeliharaan. Kami akan kembali segera.</p>
+        <p>Mohon maaf, kami sedang melakukan pemeliharaan untuk memberikan pengalaman yang lebih baik.</p>
         <p class="countdown" id="countdown"></p>
+        <button class="button" onclick="window.location.reload()">Coba Lagi</button>
     </div>
 
     <script>
@@ -70,7 +123,7 @@
 
             // Tampilkan hasil di elemen dengan id "countdown"
             document.getElementById("countdown").innerHTML =
-                hours + " Jam " + minutes + " Menit " + seconds + " Detik";
+                "<span>" + hours + " Jam</span> <span>" + minutes + " Menit</span> <span>" + seconds + " Detik</span>";
 
             // Jika countdown selesai
             if (distance < 0) {
