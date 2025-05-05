@@ -36,12 +36,12 @@
         }
 
         .overlay {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
             padding: 40px;
             width: 90%;
-            max-width: 600px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 650px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         h1 {
@@ -59,17 +59,32 @@
         .countdown {
             font-size: 2.5em;
             font-weight: bold;
-            color: #00ff00;
             margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             animation: fadeIn 4s ease;
         }
 
         .countdown span {
             display: inline-block;
-            margin: 0 10px;
-            padding: 10px;
+            margin: 0 15px;
+            padding: 20px;
+            background-color: #00ff00;
+            border-radius: 10px;
+            font-size: 2.2em;
+            color: #333;
+            box-shadow: 0 6px 12px rgba(0, 255, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .countdown span:hover {
             background-color: #ff5733;
-            border-radius: 5px;
+            transform: scale(1.1);
+        }
+
+        .countdown span:active {
+            transform: scale(0.9);
         }
 
         @keyframes fadeIn {
@@ -103,7 +118,11 @@
     <div class="overlay">
         <h1>Website Sedang Dalam Pemeliharaan</h1>
         <p>Mohon maaf, kami sedang melakukan pemeliharaan untuk memberikan pengalaman yang lebih baik.</p>
-        <p class="countdown" id="countdown"></p>
+        <div class="countdown" id="countdown">
+            <span id="hours">00</span> 
+            <span id="minutes">00</span> 
+            <span id="seconds">00</span>
+        </div>
         <button class="button" onclick="window.location.reload()">Coba Lagi</button>
     </div>
 
@@ -122,8 +141,9 @@
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Tampilkan hasil di elemen dengan id "countdown"
-            document.getElementById("countdown").innerHTML =
-                "<span>" + hours + " Jam</span> <span>" + minutes + " Menit</span> <span>" + seconds + " Detik</span>";
+            document.getElementById("hours").innerHTML = formatTime(hours);
+            document.getElementById("minutes").innerHTML = formatTime(minutes);
+            document.getElementById("seconds").innerHTML = formatTime(seconds);
 
             // Jika countdown selesai
             if (distance < 0) {
@@ -131,6 +151,11 @@
                 document.getElementById("countdown").innerHTML = "Pemeliharaan selesai!";
             }
         }, 1000);
+
+        // Format waktu agar selalu dua digit
+        function formatTime(time) {
+            return time < 10 ? "0" + time : time;
+        }
     </script>
 </body>
 </html>
