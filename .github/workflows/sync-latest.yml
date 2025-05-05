@@ -3,7 +3,9 @@ name: Auto Sync All Files in f/
 on:
   push:
     branches:
-      - main  # atau ganti sesuai nama branch kamu
+      - main
+  schedule:
+    - cron: '0 * * * *'  # Jalankan setiap jam (UTC)
 
 jobs:
   sync-all-files:
