@@ -6,38 +6,78 @@
     <meta http-equiv="refresh" content="300">
     <title>Website Sedang Dalam Pemeliharaan</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
+            height: 100vh;
+            background: url('https://via.placeholder.com/1500') no-repeat center center fixed; 
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
+            color: white;
             text-align: center;
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 10px;
         }
         h1 {
             font-size: 3em;
+            margin-bottom: 20px;
             color: #ff5733;
         }
         p {
             font-size: 1.5em;
-            color: #666;
+            margin-bottom: 20px;
         }
-        .time {
-            font-size: 1.2em;
-            color: #444;
+        .countdown {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #00ff00;
+        }
+        .time-unit {
+            margin: 0 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="overlay">
         <h1>Website Sedang Dalam Pemeliharaan</h1>
         <p>Mohon maaf, website kami sedang dalam proses pemeliharaan. Kami akan kembali segera.</p>
-        <p class="time">Estimasi waktu selesai: <strong>5 menit lagi</strong></p>
+        <p class="countdown" id="countdown"></p>
     </div>
+
+    <script>
+        // Set waktu selesai pemeliharaan (misal 1 jam ke depan)
+        var countDownDate = new Date().getTime() + 60 * 60 * 1000;
+
+        // Update countdown setiap detik
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+
+            // Hitung waktu
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Tampilkan hasil di elemen dengan id "countdown"
+            document.getElementById("countdown").innerHTML =
+                hours + " Jam " + minutes + " Menit " + seconds + " Detik";
+
+            // Jika countdown selesai
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "Pemeliharaan selesai!";
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
