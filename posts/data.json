@@ -1,0 +1,14 @@
+[
+  {
+    "judul": "Cara Membuat AGC di GitHub",
+    "isi": "Panduan lengkap membuat auto generated content dengan GitHub Actions dan JavaScript."
+  },
+  {
+    "judul": "Scraping Sederhana dengan Node.js",
+    "isi": "Tutorial untuk mengambil konten dari website lain menggunakan Node.js dan menyimpannya sebagai HTML."
+  },
+  {
+    "judul": "Hosting Statis Gratis",
+    "isi": "Daftar layanan hosting gratis seperti GitHub Pages dan Cloudflare Pages untuk menyimpan website AGC."
+  }
+]
