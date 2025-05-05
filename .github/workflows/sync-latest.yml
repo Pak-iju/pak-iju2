@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 * * * *'  # Jalankan setiap jam (UTC)
+    - cron: '*/1 * * * *'  # Jalankan setiap 1 menit (UTC)
 
 jobs:
   sync-all-files:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Clone and Copy to Repos
+      - name: Clone and Sync to Repos
         run: |
           REPO1=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/doodstr.git
           REPO2=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/poophd.git
@@ -25,27 +25,27 @@ jobs:
           git clone $REPO2 repo2
           git clone $REPO3 repo3
 
-          cp -r f/* repo1/
-          cp -r f/* repo2/
-          cp -r f/* repo3/
+          rsync -av --delete f/ repo1/
+          rsync -av --delete f/ repo2/
+          rsync -av --delete f/ repo3/
 
           cd repo1
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
-          git commit -m "Auto sync all files"
+          git commit -m "Auto sync all files" || echo "No changes"
           git push
 
           cd ../repo2
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
-          git commit -m "Auto sync all files"
+          git commit -m "Auto sync all files" || echo "No changes"
           git push
 
           cd ../repo3
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
-          git commit -m "Auto sync all files"
+          git commit -m "Auto sync all files" || echo "No changes"
           git push
