@@ -1,25 +1,32 @@
-name: Minimal Push Test
+name: Auto Sync All Files in f/
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main  # atau ganti sesuai nama branch kamu
 
 jobs:
-  test-push:
+  sync-all-files:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone & Commit Test
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Clone and Copy to Repos
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          REPO1=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/doodstr.git
 
-          REPO=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/doodstr.git
 
-          git clone $REPO repo
-          cd repo
+          git clone $REPO1 repo1
 
-          echo "Test at $(date)" >> test.txt
 
+          cp -r f/* repo1/
+
+
+          cd repo1
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
           git add .
-          git commit -m "Test push $(date)" || echo "No changes to commit"
+          git commit -m "Auto sync all files"
           git push
