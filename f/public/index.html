@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Generator Landing Page Doodstream</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background: #121212;
+      color: #f0f0f0;
+      font-family: 'Poppins', sans-serif;
+      padding: 20px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      color: #ff5e57;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 16px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      border: none;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      font-family: monospace;
+      height: 300px;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .button-group {
+      margin-top: 10px;
+    }
+
+    .btn-generate {
+      background-color: #03a9f4;
+      color: white;
+    }
+
+    .btn-copy {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .btn-save {
+      background-color: #ff9800;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔧 Generator Landing Page Doodstream</h2>
+
+  <div class="form-group">
+    <label for="pageTitle">Judul Halaman:</label>
+    <input type="text" id="pageTitle" placeholder="Contoh: Koleksi Film 2025">
+  </div>
+
+  <div class="form-group">
+    <label for="inputLinks">Daftar Link (satu per baris):</label>
+    <textarea id="inputLinks" placeholder="https://doood.so/e/abc123..."></textarea>
+  </div>
+
+  <div class="button-group">
+    <button class="btn-generate" onclick="generateHTML()">✨ Generate HTML</button>
+    <button class="btn-copy" onclick="copyToClipboard()">📋 Salin HTML</button>
+    <button class="btn-save" onclick="saveToServer()">💾 Simpan ke Server</button>
+  </div>
+
+  <div class="form-group">
+    <label for="outputHTML">Hasil HTML:</label>
+    <textarea id="outputHTML" readonly></textarea>
+  </div>
+
+  <script>
+    function generateHTML() {
+      const title = document.getElementById('pageTitle').value.trim() || 'Doodstream List';
+      const raw = document.getElementById('inputLinks').value.trim();
+      const links = raw.split(/\r?\n/).filter(l => l);
+
+      const linkItems = links.map(l =>
+        `<p><a href="https://pak-iju2.pages.dev/test.html" target="_blank" class="bob" data-href="${l}">${l}</a></p>`
+      ).join('');
+
+      const html = `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>${title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: sans-serif; background: #121212; color: #eee; padding: 20px; }
+    .container a { display: block; color: #03a9f4; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <h1>${title}</h1>
+  <div class="container">
+    ${linkItems}
+  </div>
+  <script>
+    document.querySelectorAll('a.bob').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = link.getAttribute('data-href');
+        setTimeout(() => window.location.href = target, 100);
+      });
+    });
+  <\/script>
+</body>
+</html>`;
+
+      document.getElementById('outputHTML').value = html;
+    }
+
+    function copyToClipboard() {
+      const output = document.getElementById('outputHTML');
+      output.select();
+      document.execCommand('copy');
+      alert('HTML berhasil disalin!');
+    }
+
+    function saveToServer() {
+      const content = document.getElementById('outputHTML').value;
+      const filename = prompt("Nama file (akhiri .html):", "page.html");
+
+      if (!filename) return;
+
+      fetch('/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename, content })
+      })
+      .then(res => res.json())
+      .then(data => alert(data.message || 'Tersimpan!'))
+      .catch(err => alert('Gagal menyimpan!'));
+    }
+  </script>
+</body>
+</html>
