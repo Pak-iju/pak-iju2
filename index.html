@@ -1,161 +1,162 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="300">
-    <title>Website Sedang Dalam Pemeliharaan</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            height: 100vh;
-            background: linear-gradient(45deg, #ff5733, #900c3f);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            animation: backgroundMove 10s ease-in-out infinite;
-        }
+  <meta charset="UTF-8" />
+  <title>Generator Landing Page Doodstream</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background: #121212;
+      color: #f0f0f0;
+      font-family: 'Poppins', sans-serif;
+      padding: 20px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        @keyframes backgroundMove {
-            0% {
-                background: linear-gradient(45deg, #ff5733, #900c3f);
-            }
-            50% {
-                background: linear-gradient(45deg, #900c3f, #ff5733);
-            }
-            100% {
-                background: linear-gradient(45deg, #ff5733, #900c3f);
-            }
-        }
+    h2 {
+      color: #ff5e57;
+      margin-bottom: 20px;
+    }
 
-        .overlay {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
-            padding: 40px;
-            width: 90%;
-            max-width: 650px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
+    .form-group {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 16px;
+    }
 
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            animation: fadeIn 2s ease;
-        }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      border: none;
+      box-sizing: border-box;
+    }
 
-        p {
-            font-size: 1.4em;
-            margin-bottom: 20px;
-            animation: fadeIn 3s ease;
-        }
+    textarea {
+      font-family: monospace;
+      height: 300px;
+    }
 
-        .countdown {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 4s ease;
-        }
+    button {
+      padding: 12px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-        .countdown span {
-            display: inline-block;
-            margin: 0 15px;
-            padding: 20px;
-            background-color: #00ff00;
-            border-radius: 10px;
-            font-size: 2.2em;
-            color: #333;
-            box-shadow: 0 6px 12px rgba(0, 255, 0, 0.3);
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
+    .button-group {
+      margin-top: 10px;
+    }
 
-        .countdown span:hover {
-            background-color: #ff5733;
-            transform: scale(1.1);
-        }
+    .btn-generate {
+      background-color: #03a9f4;
+      color: white;
+    }
 
-        .countdown span:active {
-            transform: scale(0.9);
-        }
+    .btn-copy {
+      background-color: #4caf50;
+      color: white;
+    }
 
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
-        .button {
-            margin-top: 30px;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            background-color: #00ff00;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: #007d00;
-        }
-
-    </style>
+    .btn-save {
+      background-color: #ff9800;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <div class="overlay">
-        <h1>Website Sedang Dalam Pemeliharaan</h1>
-        <p>Mohon maaf, kami sedang melakukan pemeliharaan untuk memberikan pengalaman yang lebih baik.</p>
-        <div class="countdown" id="countdown">
-            <span id="hours">00</span> 
-            <span id="minutes">00</span> 
-            <span id="seconds">00</span>
-        </div>
-        <button class="button" onclick="window.location.reload()">Coba Lagi</button>
-    </div>
+  <h2>🔧 Generator Landing Page Doodstream</h2>
 
-    <script>
-        // Set waktu selesai pemeliharaan (misal 1 jam ke depan)
-        var countDownDate = new Date().getTime() + 60 * 60 * 1000;
+  <div class="form-group">
+    <label for="pageTitle">Judul Halaman:</label>
+    <input type="text" id="pageTitle" placeholder="Contoh: Koleksi Film 2025">
+  </div>
 
-        // Update countdown setiap detik
-        var x = setInterval(function() {
-            var now = new Date().getTime();
-            var distance = countDownDate - now;
+  <div class="form-group">
+    <label for="inputLinks">Daftar Link (satu per baris):</label>
+    <textarea id="inputLinks" placeholder="https://doood.so/e/abc123..."></textarea>
+  </div>
 
-            // Hitung waktu
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  <div class="button-group">
+    <button class="btn-generate" onclick="generateHTML()">✨ Generate HTML</button>
+    <button class="btn-copy" onclick="copyToClipboard()">📋 Salin HTML</button>
+    <button class="btn-save" onclick="saveToServer()">💾 Simpan ke Server</button>
+  </div>
 
-            // Tampilkan hasil di elemen dengan id "countdown"
-            document.getElementById("hours").innerHTML = formatTime(hours);
-            document.getElementById("minutes").innerHTML = formatTime(minutes);
-            document.getElementById("seconds").innerHTML = formatTime(seconds);
+  <div class="form-group">
+    <label for="outputHTML">Hasil HTML:</label>
+    <textarea id="outputHTML" readonly></textarea>
+  </div>
 
-            // Jika countdown selesai
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdown").innerHTML = "Pemeliharaan selesai!";
-            }
-        }, 1000);
+  <script>
+    function generateHTML() {
+      const title = document.getElementById('pageTitle').value.trim() || 'Doodstream List';
+      const raw = document.getElementById('inputLinks').value.trim();
+      const links = raw.split(/\r?\n/).filter(l => l);
 
-        // Format waktu agar selalu dua digit
-        function formatTime(time) {
-            return time < 10 ? "0" + time : time;
-        }
-    </script>
+      const linkItems = links.map(l =>
+        `<p><a href="https://pak-iju2.pages.dev/test.html" target="_blank" class="bob" data-href="${l}">${l}</a></p>`
+      ).join('');
+
+      const html = `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>${title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: sans-serif; background: #121212; color: #eee; padding: 20px; }
+    .container a { display: block; color: #03a9f4; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <h1>${title}</h1>
+  <div class="container">
+    ${linkItems}
+  </div>
+  <script>
+    document.querySelectorAll('a.bob').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = link.getAttribute('data-href');
+        setTimeout(() => window.location.href = target, 100);
+      });
+    });
+  <\/script>
+</body>
+</html>`;
+
+      document.getElementById('outputHTML').value = html;
+    }
+
+    function copyToClipboard() {
+      const output = document.getElementById('outputHTML');
+      output.select();
+      document.execCommand('copy');
+      alert('HTML berhasil disalin!');
+    }
+
+    function saveToServer() {
+      const content = document.getElementById('outputHTML').value;
+      const filename = prompt("Nama file (akhiri .html):", "page.html");
+
+      if (!filename) return;
+
+      fetch('/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename, content })
+      })
+      .then(res => res.json())
+      .then(data => alert(data.message || 'Tersimpan!'))
+      .catch(err => alert('Gagal menyimpan!'));
+    }
+  </script>
 </body>
 </html>
