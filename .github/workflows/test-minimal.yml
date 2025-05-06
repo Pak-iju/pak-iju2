@@ -3,7 +3,9 @@ name: Auto Sync Files in f/
 on:
   push:
     branches:
-      - main
+      - main  # Trigger ketika ada push ke branch main
+  schedule:
+    - cron: '*/1 * * * *'  # Menjalankan setiap 1 menit
 
 jobs:
   sync-all-files:
