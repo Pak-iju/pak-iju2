@@ -1,0 +1,25 @@
+name: Auto Upload HTML
+
+on:
+  push:
+    paths:
+      - 'f/**'
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Git Config
+      run: |
+        git config --global user.name 'pasteju-bot'
+        git config --global user.email 'bot@pasteju.com'
+
+    - name: Commit and Push
+      run: |
+        git add f/
+        git commit -m "Auto upload HTML page" || echo "Nothing to commit"
+        git push
