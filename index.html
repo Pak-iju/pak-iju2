@@ -1,79 +1,163 @@
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>HTML Generator</title>
-  <style>
-    body {
-      background: #111;
-      color: white;
-      font-family: sans-serif;
-      padding: 2em;
-    }
-    textarea, input {
-      width: 100%;
-      padding: 0.5em;
-      margin-bottom: 1em;
-      font-size: 1em;
-    }
-    button {
-      padding: 0.5em 1em;
-      font-size: 1em;
-      margin-right: 0.5em;
-      cursor: pointer;
-    }
-    #hasil {
-      white-space: pre-wrap;
-      background: #222;
-      padding: 1em;
-      margin-top: 1em;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="300">
+    <title>Website Sedang Dalam Pemeliharaan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff5733, #900c3f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            animation: backgroundMove 10s ease-in-out infinite;
+        }
+
+        @keyframes backgroundMove {
+            0% {
+                background: linear-gradient(45deg, #ff5733, #900c3f);
+            }
+            50% {
+                background: linear-gradient(45deg, #900c3f, #ff5733);
+            }
+            100% {
+                background: linear-gradient(45deg, #ff5733, #900c3f);
+            }
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 40px;
+            width: 90%;
+            max-width: 650px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease;
+        }
+
+        p {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            animation: fadeIn 3s ease;
+        }
+
+        .countdown {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 4s ease;
+        }
+
+        .countdown span {
+            display: inline-block;
+            margin: 0 15px;
+            padding: 20px;
+            background-color: #00ff00;
+            border-radius: 10px;
+            font-size: 2.2em;
+            color: #333;
+            box-shadow: 0 6px 12px rgba(0, 255, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .countdown span:hover {
+            background-color: #ff5733;
+            transform: scale(1.1);
+        }
+
+        .countdown span:active {
+            transform: scale(0.9);
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .button {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background-color: #00ff00;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #007d00;
+        }
+
+    </style>
 </head>
 <body>
-  <h2>HTML Generator</h2>
-  <label>Judul Halaman:</label>
-  <input type="text" id="judul" placeholder="Contoh: Halaman Saya">
+    <div class="overlay">
+        <h1>Website Sedang Dalam Pemeliharaan</h1>
+        <p>Mohon maaf, kami sedang melakukan pemeliharaan untuk memberikan pengalaman yang lebih baik.</p>
+        <div class="countdown" id="countdown">
+            <span id="hours">00</span> 
+            <span id="minutes">00</span> 
+            <span id="seconds">00</span>
+        </div>
+        <button class="button" onclick="window.location.reload()">Coba Lagi</button>
+    </div>
 
-  <label>Daftar Link (satu per baris):</label>
-  <textarea id="linkList" rows="6" placeholder="https://contoh.com/page1
-https://contoh.com/page2"></textarea>
+    <script>
+        // Set waktu selesai pemeliharaan (misal 1 jam ke depan)
+        var countDownDate = new Date().getTime() + 60 * 60 * 1000;
 
-  <button onclick="generateHTML()">🔧 Generate HTML</button>
-  <button onclick="copyHTML()">📋 Salin HTML</button>
-  <button onclick="saveToFile()">💾 Simpan ke File</button>
+        // Update countdown setiap detik
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
 
-  <h3>Hasil HTML:</h3>
-  <div id="hasil"></div>
+            // Hitung waktu
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  <script>
-    function generateHTML() {
-      const judul = document.getElementById('judul').value;
-      const links = document.getElementById('linkList').value.split('\n').filter(x => x.trim() !== '');
+            // Tampilkan hasil di elemen dengan id "countdown"
+            document.getElementById("hours").innerHTML = formatTime(hours);
+            document.getElementById("minutes").innerHTML = formatTime(minutes);
+            document.getElementById("seconds").innerHTML = formatTime(seconds);
 
-      let html = `<html><head><title>${judul}</title></head><body><ul>`;
-      links.forEach(link => {
-        html += `<li><a href="${link}" target="_blank">${link}</a></li>`;
-      });
-      html += `</ul></body></html>`;
+            // Jika countdown selesai
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "Pemeliharaan selesai!";
+            }
+        }, 1000);
 
-      document.getElementById('hasil').textContent = html;
-    }
-
-    function copyHTML() {
-      const html = document.getElementById('hasil').textContent;
-      navigator.clipboard.writeText(html).then(() => alert('Disalin!'));
-    }
-
-    function saveToFile() {
-      const html = document.getElementById('hasil').textContent;
-      const blob = new Blob([html], { type: 'text/html' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'hasil.html';
-      a.click();
-    }
-  </script>
+        // Format waktu agar selalu dua digit
+        function formatTime(time) {
+            return time < 10 ? "0" + time : time;
+        }
+    </script>
 </body>
 </html>
