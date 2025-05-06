@@ -1,4 +1,4 @@
-name: Auto Sync All Files in f/
+name: Auto Sync Files in f/
 
 on:
   push:
@@ -10,24 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
       - name: Clone and Sync to Target Repo
         run: |
+          # Ganti dengan URL repo target yang sesuai
           REPO1=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/doodstr.git
 
+          # Clone repo target
           git clone $REPO1 repo1
 
-          # Hapus semua file lama di repo target kecuali .git
-          find repo1 -mindepth 1 -not -name '.git' -exec rm -rf {} +
+          # Hapus isi folder f/ di repo target (kecuali .git)
+          rm -rf repo1/f/*
 
-          # Salin semua file dari folder f/ ke repo target
-          cp -r f/* repo1/
+          # Salin seluruh file dari folder f/ ke f/ di repo target
+          cp -r f/* repo1/f/
 
+          # Commit dan push perubahan
           cd repo1
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
-          git commit -m "Auto sync all files (with delete support)" || echo "No changes"
+          git commit -m "Sync files from f/ to repo target" || echo "No changes"
           git push
