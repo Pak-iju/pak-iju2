@@ -143,21 +143,8 @@
       const links = raw.split(/\r?\n/).filter(l => l);
 
       const linkItems = links.map(l =>
-        `<p><a href="https://pak-iju2.pages.dev/test.html" target="_blank" class="bob" data-href="${l}">${l}</a></p>`
+        `<p><a href="${l}" target="_blank">${l}</a></p>`
       ).join('');
-
-      const scriptClickRedirect = `
-<script>
-  document.querySelectorAll('a.bob').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      const targetLink = this.getAttribute('data-href');
-      setTimeout(function() {
-        window.location.href = targetLink;
-      }, 100);
-    });
-  });
-<\/script>
-`;
 
       const themeScript = `
 <script>
@@ -171,6 +158,31 @@
       document.body.classList.add('light');
     }
   };
+<\/script>
+`;
+
+const popunderScript = `
+	<!-- poopunder -->
+<script>
+document.addEventListener('click', function () {
+    const now = Date.now();
+    const lastPopTime = localStorage.getItem('lastPopTime');
+
+    // Jika belum pernah atau sudah lebih dari 15 menit (900000 ms)
+    if (!lastPopTime || now - lastPopTime > 900000) {
+        let popunder = window.open(
+            "https://pak-iju2.pages.dev/test.html",
+            "_blank",
+            "width=800,height=600,resizable=yes,scrollbars=yes"
+        );
+
+        if (popunder) {
+            popunder.blur();
+            window.focus();
+            localStorage.setItem('lastPopTime', now.toString());
+        }
+    }
+});
 <\/script>
 `;
 
@@ -195,7 +207,7 @@ _Hasync.push(['Histats.track_hits', '']);
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-   <title>Pasteju</title>
+  <title>${title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
@@ -268,6 +280,7 @@ _Hasync.push(['Histats.track_hits', '']);
       z-index: 999;
     }
   </style>
+  ${popunderScript}
 </head>
 <body>
   <button class="toggle-mode">🌗 Mode</button>
@@ -276,7 +289,6 @@ _Hasync.push(['Histats.track_hits', '']);
     ${linkItems}
   </div>
   <footer>&copy; 2025 | Pasteju Link Collection</footer>
-  ${scriptClickRedirect}
   ${themeScript}
   ${histatsScript}
 </body>
