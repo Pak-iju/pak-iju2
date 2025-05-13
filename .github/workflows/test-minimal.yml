@@ -13,27 +13,31 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3  # Checkout repo utama
 
-      - name: Clone and Sync to Target Repos
+      - name: Clone and Sync to Target Repos 
         run: |
           # URL repo target, ganti dengan URL repo target yang sesuai
           REPO1=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/doodstr.git
           REPO2=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/poophd.git
           REPO3=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/do7go.git
+          REPO4=https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Pak-iju/doobs.git
 
           # Clone repo target
           git clone $REPO1 repo1
           git clone $REPO2 repo2
           git clone $REPO3 repo3
+          git clone $REPO4 repo4
 
           # Hapus isi folder f/ di repo target (kecuali .git)
           rm -rf repo1/f/*
           rm -rf repo2/f/*
           rm -rf repo3/f/*
+          rm -rf repo4/f/*
 
           # Salin seluruh file dari folder f/ ke f/ di repo target
           cp -r f/* repo1/f/
           cp -r f/* repo2/f/
           cp -r f/* repo3/f/
+          cp -r f/* repo4/f/
 
           # Commit dan push perubahan ke repo1 (doodstr)
           cd repo1
@@ -53,6 +57,14 @@ jobs:
 
           # Commit dan push perubahan ke repo3 (do7go)
           cd ../repo3
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Sync files from f/ to repo target" || echo "No changes"
+          git push
+
+          # Commit dan push perubahan ke repo4 (doobs)
+          cd ../repo4
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add .
