@@ -161,31 +161,6 @@
 <\/script>
 `;
 
-const popunderScript = `
-	<!-- poopunder -->
-<script>
-document.addEventListener('click', function () {
-    const now = Date.now();
-    const lastPopTime = localStorage.getItem('lastPopTime');
-
-    // Jika belum pernah atau sudah lebih dari 15 menit (900000 ms)
-    if (!lastPopTime || now - lastPopTime > 900000) {
-        let popunder = window.open(
-            "https://pak-iju2.pages.dev/test.html",
-            "_blank",
-            "width=800,height=600,resizable=yes,scrollbars=yes"
-        );
-
-        if (popunder) {
-            popunder.blur();
-            window.focus();
-            localStorage.setItem('lastPopTime', now.toString());
-        }
-    }
-});
-<\/script>
-`;
-
       const histatsScript = `
 <!-- Histats.com START -->
 <script type="text/javascript">
@@ -280,7 +255,6 @@ _Hasync.push(['Histats.track_hits', '']);
       z-index: 999;
     }
   </style>
-  ${popunderScript}
 </head>
 <body>
   <button class="toggle-mode">🌗 Mode</button>
